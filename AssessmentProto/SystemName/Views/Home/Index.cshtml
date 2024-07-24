@@ -1,0 +1,94 @@
+﻿@using SystemName.Models.ViewModels;
+@model ProductViewModel
+@{
+    ViewData["Title"] = "Products";
+}
+@*Buttons and search some buttons dont display unless admin.*@
+@if (ViewBag.IsAdmin == "True")
+{
+    <a asp-controller="Account" asp-action="List" class="btn btn-primary mb-2" style="width: 100px;">Accounts List</a>
+}
+@if (ViewBag.IsAdmin == "True")
+{
+    <div class="mb-2">
+        <a asp-controller="Product" asp-action="Add" class="btn btn-primary">Add New Product</a>
+    </div>
+}
+<div class="mb-2">
+    <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Login</a>
+</div>
+
+<div class="mb-2">
+    <a asp-controller="Cart" asp-action="ViewCart" class="btn btn-primary">View Cart</a>
+</div>
+
+<form method="get" asp-controller="Home" asp-action="Search">
+    <input type="text" name="search" placeholder="Name of product">
+    <button type="submit">Search</button>
+</form>
+
+<p>Is Admin: @ViewBag.IsAdmin</p>
+<p>Items in Cart: @ViewBag.Cart</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>   @*coloumns*@
+            <th>Author</th>
+            <th>Description</th>
+            <th>Genre</th>
+            <th>Sub-genre</th>
+            <th>Published</th>
+            <th>Price</th>
+            <th>Stock</th>
+            
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)  @* gets details of every item and link to their edit/delte pages*@
+        {
+            <tr style="height: 15vh;">
+                <td>@product.Name</td>
+                <td>@product.Author</td>
+                <td >
+                    <div style="max-height: 15vh; max-width: 25vh; overflow: hidden; text-overflow: ellipsis; white-space: normal;"> @product.Description</div>
+                    
+                </td>
+                <td>@product.GenreObj.Name</td>
+                <td>
+                    @Model.GetSubGenreName(product)
+                    
+                </td>
+                <td>@product.Published</td>
+                <td>$@Model.GetPriceForProduct(product)</td>@*Using viemodel to get price and quanity which isnt in podcut*@
+                
+                <td>@Model.GetQuantity(product)</td>
+                <td></td>
+
+                <td>
+                    @*Buttons use ID to identify what object the button needs to know*@
+                    <a asp-controller="Product" asp-action="View"
+                       asp-route-id="@product.ID"
+                       asp-route-slug="@product.Slug" class="btn btn-primary mb-2" style="width: 100px;">View</a>
+
+                    <a asp-controller="Cart" asp-action="AddToCart"
+                       asp-route-id="@product.ID"
+                       asp-route-slug="@product.Slug" class="btn btn-primary mb-2" style="width: 100px;">Add to Cart</a>
+
+                    @if (ViewBag.IsAdmin == "True")@*Admin only buttons to go edit and delete item*@
+                    {
+                        <a asp-controller="Product" asp-action="Edit"
+                           asp-route-id="@product.ID"
+                           asp-route-slug="@product.Slug" class="btn btn-primary mb-2" style="width: 100px;">Edit</a>
+
+                        <a asp-controller="Product" asp-action="Delete"
+                           asp-route-id="@product.ID"
+                           asp-route-slug="@product.Slug" class="btn btn-primary mb-2" style="width: 100px;">Delete</a>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

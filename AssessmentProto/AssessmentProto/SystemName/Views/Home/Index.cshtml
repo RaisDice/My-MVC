@@ -1,0 +1,48 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="mb-2">
+    <a asp-controller="Product" asp-action="Add">Add New Product</a>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>   @*coloumns*@
+            <th>Author</th>
+            <th>Description</th>
+            <th>Genre</th>
+            <th>Sub-genre</th>
+            <th>Published</th>
+            <th>LastUpdatedBy</th>
+            <th>LastUpdated</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)  @* gets details of every item and link to their edit/delte pages*@
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Author</td>
+                <td>@product.Description</td>
+                <td>@product.GenreObj.Name</td>
+                <td></td>
+                <td>@product.Published</td>
+                <td></td>
+                <td></td>
+                
+                <td>
+                    <a asp-controller="Product" asp-action="Edit"
+                       asp-route-id="@product.ID"
+                       asp-route-slug="@product.Slug">Edit</a>
+                    <a asp-controller="Product" asp-action="Delete"
+                       asp-route-id="@product.ID"
+                       asp-route-slug="@product.Slug">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

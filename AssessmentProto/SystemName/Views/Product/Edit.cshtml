@@ -1,0 +1,95 @@
+﻿@model Product
+@{
+    string title = ViewBag.Action + " Product";
+    ViewData["Title"] = title;
+}
+
+<h2>@ViewBag.Title</h2>
+@*form to edit*@
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Name</label>
+        <input asp-for="Name" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Author" class="form-label">Author</label>
+        <input asp-for="Author" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Description</label>
+        <input asp-for="Description" class="form-control">
+    </div>
+
+  
+
+    <div class="mb-3">
+        <label asp-for="Published" class="form-label">Year</label>
+        <input asp-for="Published" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Genre" class="form-label">Genre</label>
+        <select asp-for="Genre" class="form-select" id="genreSelect" name="Genre">
+            
+            @foreach (Genre g in ViewBag.Genres) @*gets genre name from the viewbag and its ID*@
+            {
+                <option value="@g.genreID">@g.Name</option>
+            }
+        </select>
+    </div>
+    
+   
+    <div class="mb-3">
+        <label asp-for=subGenre class="form-label">Sub-Genre</label> @*could get to work so listed all subgenres with appropriate value*@
+        <select asp-for="subGenre" class="form-select" id="SubgenreSelect" name="subGenre">
+
+            
+                <option value=1>Drama</option>
+                <option value=2>Comedy</option>
+                <option value=3>Crime</option>
+                <option value=4>Action</option>
+                <option value=5>Horror</option>
+                <option value=6>Family</option>
+                <option value=7>Western</option>
+                <option value=8>Documentary</option>
+                <option value=1>Fiction</option>
+                <option value=2>Historical Fiction</option>
+                <option value=3>Fantasy/sci</option>
+                <option value=4>Young Adult</option>
+                <option value=5>Humour</option>
+                <option value=6>Crime</option>
+                <option value=7>Mystery</option>
+                <option value=8>Romance</option>
+                <option value=9>Thriller</option>
+                <option value=1>RPG</option>
+                <option value=2>Musical Game</option>
+                <option value=3>Puzzle</option>
+                <option value=4>Strategy</option>
+                <option value=5>Platformer</option>
+                <option value=6>Action-Adventure</option>
+                <option value=7>Racing</option>
+                <option value=8>Stealth</option>
+                <option value=9>MMORPG</option>
+                <option value=10>Survival</option>
+                <option value=11>Simulation</option>
+                <option value=12>Sports</option>
+                <option value=13>FPS</option>
+                <option value=14>Fighting</option>
+                
+            
+        </select>
+    </div>
+
+
+    
+
+    <input type="hidden" asp-for="ID" />
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-controller="Home" asp-action="Index"
+       class="btn btn-primary">Cancel</a>
+</form>

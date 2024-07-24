@@ -1,0 +1,26 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>@*Login form submits to login post action*@
+
+<form asp-action="Login" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="UserName" class="form-label">Username</label>
+        <input asp-for="UserName" class="form-control">
+    </div>
+
+    
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label">Password</label>
+        <input asp-for="Password" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+    <a asp-controller="Account" asp-action="Register"
+       class="btn btn-primary">Register</a>
+</form>
+ 

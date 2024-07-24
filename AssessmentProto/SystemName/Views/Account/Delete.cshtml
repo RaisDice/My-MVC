@@ -1,0 +1,18 @@
+﻿@*@*model Product INCOMPLETE <-- this is products nothing new
+@{
+    ViewData["Title"] = "Delete Account";
+}
+
+<h2>Confirm Deletion</h2>
+<h3>@Model.Name (@Model.Published)</h3>  @* gets name *@
+@*
+<form asp-action="Delete" method="post">
+
+    <input type="hidden" asp-for="ID" />  @*button to delete product with the ID*@
+
+@*    <button type="submit" class="btn btn-primary">Delete</button>
+
+    <a asp-controller="Home" asp-action="Index"
+       class="btn btn-primary">Cancel</a>
+</form>
+*@

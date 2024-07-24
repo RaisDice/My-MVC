@@ -1,0 +1,136 @@
+﻿@using SystemName.Models.ViewModels;
+@model AccountViewModel
+@{
+    ViewData["Title"] = "Products";
+}
+@if (ViewBag.IsAdmin == "True") @*Only for admins to see*@
+{
+    
+
+    @*<form method="get" asp-controller="Account" asp-action="Search">
+        <input type="text" name="search" placeholder="Name of product">
+        <button type="submit">Search</button>
+    </form>*@
+
+    <p>Is Admin: @ViewBag.IsAdmin</p>
+
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>   @*coloumns.  GET NAME BASED FROM EMAIL*@
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>PostCode</th>
+                <th>State</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Account in Model.Customer)  @* gets details of every item and link to their edit/delte pages*@
+            {
+                @if (Account == null) @*check if account null and skip if so*@
+                {
+                    continue;
+                }
+                <tr style="height: 15vh;">
+                   
+                        @if (Model.GetNameForAccount(Account) == "N/A")
+                        {
+                        <td>@Account.CardOwner</td>
+                    } else
+                    {
+                        <td>@Model.GetNameForAccount(Account)</td>
+                    }
+
+                    <td>
+                    @if (Account.Email != null) @*Use N/A if null*@
+                    {
+                        @Account.Email
+                    }
+                    else
+                    {
+                        <p>N/A</p>
+                    } </td>
+                    
+
+
+
+                    <td>
+                        @if (Account.PhoneNumber != null)
+                        {
+                            @Account.PhoneNumber
+                        }
+                        else
+                        {
+                            <p>N/A</p>
+                        }
+                    </td>
+                   
+
+
+                    <td>
+                        @if (Account.StreetAddress != null)
+                        {
+                            @Account.StreetAddress
+                        }
+                        else
+                        {
+                            <p>N/A</p>
+                        }
+                    </td>
+                    
+
+
+                    <td>
+                        @if (Account.PostCode != null)
+                        {
+                            @Account.PostCode
+                        }
+                        else
+                        {
+                            <p>N/A</p>
+                        }
+                    </td>
+                  
+
+
+                    <td>
+                        @if (Account.State != null)
+                        {
+                            @Account.State
+                        }
+                        else
+                        {
+                            <p>N/A</p>
+                        }
+                    </td>
+                    
+                   
+                    <td>
+                        <a asp-controller="Account" asp-action="View"
+                           asp-route-id="@Account.customerID"
+                           class="btn btn-primary mb-2" style="width: 100px;">View</a>
+
+                        @if (ViewBag.IsAdmin == "True") @*Only for admins*@
+                        {
+                            <a asp-controller="Account" asp-action="Edit"
+                               asp-route-customerID="@Account.customerID"
+                                class="btn btn-primary mb-2" style="width: 100px;">Edit</a>
+
+
+                            <a asp-controller="Account" asp-action="Delete"
+                               asp-route-id="@Account.customerID"
+                               class="btn btn-primary mb-2" style="width: 100px;">Delete</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+} else{
+   <p>Forbidden</p>
+}
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Home</a>

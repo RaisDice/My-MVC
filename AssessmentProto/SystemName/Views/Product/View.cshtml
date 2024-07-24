@@ -1,0 +1,39 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Product Details";
+}
+@*displays item details based from selected product*@
+<h2>@Model.Name</h2>
+
+<div class="mb-3">
+    <label>Genre: </label>
+    @Model.GenreObj.Name
+</div>
+
+<div class="mb-3">
+    <label>Author: </label>
+    @Model.Author
+</div>
+
+<div class="mb-3">
+    <label>Year: </label>
+    @Model.Published
+</div>
+
+
+
+<div class="mb-3">
+    <label>Description: </label>
+    @Model.Description
+</div>
+
+
+
+
+<div class="mb-3">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back</a>
+    @*option to add to cart*@
+    <a asp-controller="Cart" asp-action="AddToCart" 
+       asp-route-id="@Model.ID"
+       asp-route-slug="@Model.Slug" class="btn btn-primary mb-2" style="width: 100px;">Add to Cart</a>
+</div>

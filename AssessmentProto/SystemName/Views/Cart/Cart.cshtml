@@ -1,0 +1,43 @@
+﻿@using SystemName.Models.ViewModels;
+@model ProductViewModel 
+@{
+    ViewData["Title"] = "Cart";
+
+}
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Price</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @{double Price = 0;} @*declares price then sum is added up below. also display item details*@
+        @foreach (var product in Model.Products)
+        {
+            <tr style="height: 15vh;">
+                <td>@product.Name</td>
+                <td>@product.Author</td>
+                <td>@product.GenreObj.Name</td>
+                <td>$@Model.GetPriceForProduct(product)</td>
+            </tr>
+            Price += Model.GetPriceForProduct(product);
+
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><strong>Total Price: $@Price</strong></td>
+            
+        </tr>
+    </tfoot>
+</table>
+<div class="mb-2">
+    <a asp-controller="Cart" asp-route-Price="@Price" class="btn btn-primary mb-2" asp-action="Payment">Pay Now</a>
+</div> @*Go to Payment*@
+<div class="mb-3">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back</a>
+</div>
